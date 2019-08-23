@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  author: bbaassssiiee
+  description: |
+    Install some build tools for Windows
+  company: dockpack
+  license: MIT
+  min_ansible_version: 2.7.0
+
+  platforms:
+    - name: Windows
+      versions:
+      - all
+      - 2016
+  galaxy_tags:
+    - development
+    - windows
+
+dependencies: []
