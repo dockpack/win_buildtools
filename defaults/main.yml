@@ -1,0 +1,8 @@
+---
+
+# visualcppbuildtools_full: http://go.microsoft.com/fwlink/?LinkId=691126
+win_package_state: present
+win_package_force: false
+win_toolset:
+  - visualstudio2017buildtools
+  - visualstudio2017-workload-vctools

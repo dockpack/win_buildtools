@@ -1,0 +1,70 @@
+---
+
+- name: Install_chocolatey
+  win_chocolatey:
+    name: "chocolatey"
+  register: download_choco
+  until: download_choco is succeeded
+  retries: 10
+  delay: 2
+
+#  https://github.com/ansible/ansible/issues/53971
+- name: Downgrade chocolatey
+  win_shell: |
+    choco.exe install -y --version 0.10.11 --allow-downgrade chocolatey
+
+- name: Install git
+  win_chocolatey:
+    name: git
+    state: "{{ win_package_state }}"
+    force: "{{ win_package_force }}"
+  register: download_git
+  until: download_git is succeeded
+  retries: 10
+  delay: 2
+  tags:
+    - git
+
+#- name: Install buildtools
+#  win_chocolatey:
+#    name: "{{ item }}"
+#    state: "{{ win_package_state }}"
+#    force: "{{ win_package_force }}"
+#  with_items:
+#    - "{{ win_toolset }}"
+#  retries: 10
+#  delay: 2
+
+- name: Install cmake
+  win_chocolatey:
+    name: cmake
+    state: "{{ win_package_state }}"
+    force: "{{ win_package_force }}"
+  register: download_cmake
+  until: download_cmake is succeeded
+  retries: 10
+  delay: 2
+  tags:
+    - cmake
+
+- name: Install maven
+  win_chocolatey:
+    name: maven
+    state: "{{ win_package_state }}"
+    force: "{{ win_package_force }}"
+  register: download_maven
+  until: download_maven is succeeded
+  retries: 10
+  delay: 2
+  tags:
+    - maven
+
+- name: Install doxygen
+  win_chocolatey:
+    name: doxygen.install
+    state: "{{ win_package_state }}"
+    force: "{{ win_package_force }}"
+  register: download_doxygen
+  until: download_doxygen is succeeded
+  retries: 10
+  delay: 2
