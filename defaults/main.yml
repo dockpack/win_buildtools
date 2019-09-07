@@ -4,6 +4,9 @@
 win_package_state: present
 win_package_force: false
 win_toolset:
-  - visualstudio2015buildtools
+  - visualstudio2015community
   - visualstudio2017buildtools
   - visualstudio2017-workload-vctools
+
+builtoolsversions:
+  - '14.0.25420.1'

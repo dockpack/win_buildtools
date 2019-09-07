@@ -25,15 +25,34 @@
   tags:
     - git
 
-#- name: Install buildtools
-#  win_chocolatey:
-#    name: "{{ item }}"
-#    state: "{{ win_package_state }}"
-#    force: "{{ win_package_force }}"
-#  with_items:
-#    - "{{ win_toolset }}"
-#  retries: 10
-#  delay: 2
+- name: Install win_toolset
+  win_chocolatey:
+    name: "{{ item }}"
+    state: "{{ win_package_state }}"
+    force: "{{ win_package_force }}"
+    allow_multiple: true
+    timeout: 7200
+  with_items:
+    - "{{ win_toolset }}"
+  retries: 3
+  delay: 5
+  tags:
+    - vstools
+
+- name: Install buildtools
+  win_chocolatey:
+    name: 'microsoft-build-tools'
+    version: "{{ item }}"
+    state: "{{ win_package_state }}"
+    force: "{{ win_package_force }}"
+    allow_multiple: true
+    timeout: 7200
+  with_items:
+    - "{{ builtoolsversions }}"
+  retries: 3
+  delay: 5
+  tags:
+    - vstools
 
 - name: Install cmake
   win_chocolatey:
