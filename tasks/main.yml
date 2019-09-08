@@ -53,9 +53,11 @@
   register: dotnet
 
 - name: Reboot
-  when: dotnet.reboot_required
+  when: dotnet.changed
   win_reboot:
     reboot_timeout: 3600
+  tags:
+    - skip_ansible_lint
 
 - name: Determine choco_packages for VS2017
   when: toolset == 'msvc-14.1'
