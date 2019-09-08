@@ -1,5 +1,10 @@
 ---
 
+- name: Create local directory
+  win_file:
+    path: "{{ win_local_dir }}"
+    state: directory
+
 - name: Install_chocolatey
   win_chocolatey:
     name: "chocolatey"
@@ -25,15 +30,57 @@
   tags:
     - git
 
-#- name: Install buildtools
-#  win_chocolatey:
-#    name: "{{ item }}"
-#    state: "{{ win_package_state }}"
-#    force: "{{ win_package_force }}"
-#  with_items:
-#    - "{{ win_toolset }}"
-#  retries: 10
-#  delay: 2
+- name: Install config file for visualstudio2015
+  when: toolset == 'msvc-14.0'
+  win_copy:
+    src: AdminDeployment.xml
+    dest: "{{ win_local_dir }}/AdminDeployment.xml"
+
+
+- name: Install visualstudio2015community
+  when: toolset == 'msvc-14.0'
+  win_chocolatey:
+    name: "{{ msvc2015_choco_package }}"
+    force: true
+    package_params: '--AdminFile {{ win_local_dir }}/AdminDeployment.xml'
+    timeout: 7200
+
+- name: Install .NET Framework Core
+  when: toolset == 'msvc-14.1'
+  win_feature:
+    name: 'NET-Framework-45-Core'
+    state: present
+  register: dotnet
+
+- name: Reboot
+  when: dotnet.reboot_required
+  win_reboot:
+    reboot_timeout: 3600
+
+- name: Determine choco_packages for VS2017
+  when: toolset == 'msvc-14.1'
+  set_fact:
+    choco_packages: "{{ msvc2017_choco_packages }}"
+
+- name: Determine choco_packages for VS2019
+  when: toolset == 'msvc-16.0'
+  set_fact:
+    choco_packages: "{{ msvc2017_choco_packages }}"
+
+- name: Install choco packages
+  when: toolset != 'msvc-14.0'
+  win_chocolatey:
+    name: "{{ item }}"
+    state: "{{ win_package_state }}"
+    force: "{{ win_package_force }}"
+    allow_multiple: true
+    timeout: 7200
+  loop:
+    - "{{ choco_packages }}"
+  retries: 3
+  delay: 5
+  tags:
+    - vstools
 
 - name: Install cmake
   win_chocolatey:
