@@ -63,9 +63,9 @@
     choco_packages: "{{ msvc2017_choco_packages }}"
 
 - name: Determine choco_packages for VS2019
-  when: toolset == 'msvc-16.0'
+  when: toolset == 'msvc-14.2'
   set_fact:
-    choco_packages: "{{ msvc2017_choco_packages }}"
+    choco_packages: "{{ msvc2019_choco_packages }}"
 
 - name: Install choco packages
   when: toolset != 'msvc-14.0'
