@@ -18,6 +18,12 @@
   win_shell: |
     choco.exe install -y --version 0.10.11 --allow-downgrade chocolatey
 
+- name: Uninstall choco packages
+  win_chocolatey:
+    name: "{{ uninstall_choco_packages }}"
+    state: absent
+    force: true
+
 - name: Install git
   win_chocolatey:
     name: git
