@@ -10,8 +10,8 @@ galaxy_info:
   platforms:
     - name: Windows
       versions:
-      - all
-      - 2016
+        - all
+        - 2016
   galaxy_tags:
     - development
     - windows
