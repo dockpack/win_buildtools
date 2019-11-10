@@ -45,6 +45,8 @@
 
 - name: Install visualstudio2015community
   when: toolset == 'msvc-14.0'
+  async: 4000
+  poll: 60
   win_chocolatey:
     name: "{{ msvc2015_choco_package }}"
     force: true
@@ -77,6 +79,8 @@
 
 - name: Install choco packages
   when: toolset != 'msvc-14.0'
+  async: 4000
+  poll: 60
   win_chocolatey:
     name: "{{ item }}"
     state: "{{ win_package_state }}"
