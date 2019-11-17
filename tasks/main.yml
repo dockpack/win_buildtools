@@ -5,6 +5,11 @@
     path: "{{ win_local_dir }}"
     state: directory
 
+- name: Install windows features
+  win_feature:
+    name: "{{ install_windows2016_features }}"
+    state: absent
+
 - name: Install_chocolatey
   win_chocolatey:
     name: "chocolatey"
@@ -24,29 +29,16 @@
     state: absent
     force: true
 
-- name: Install git
-  win_chocolatey:
-    name: git
-    state: "{{ win_package_state }}"
-    force: "{{ win_package_force }}"
-  register: download_git
-  until: download_git is succeeded
-  retries: 10
-  delay: 2
-  tags:
-    - git
-
 - name: Install config file for visualstudio2015
   when: toolset == 'msvc-14.0'
   win_copy:
     src: AdminDeployment.xml
     dest: "{{ win_local_dir }}/AdminDeployment.xml"
 
-
 - name: Install visualstudio2015community
   when: toolset == 'msvc-14.0'
-  async: 4000
-  poll: 60
+  async: 7200
+  poll: 30
   win_chocolatey:
     name: "{{ msvc2015_choco_package }}"
     force: true
@@ -77,8 +69,7 @@
   set_fact:
     choco_packages: "{{ msvc2019_choco_packages }}"
 
-- name: Install choco packages
-  when: toolset != 'msvc-14.0'
+- name: Install win_buildtools_choco packages
   async: 4000
   poll: 60
   win_chocolatey:
@@ -88,42 +79,8 @@
     allow_multiple: true
     timeout: 7200
   loop:
-    - "{{ choco_packages }}"
+    - "{{ win_buildtools_choco }}"
   retries: 3
   delay: 5
   tags:
     - vstools
-
-- name: Install cmake
-  win_chocolatey:
-    name: cmake
-    state: "{{ win_package_state }}"
-    force: "{{ win_package_force }}"
-  register: download_cmake
-  until: download_cmake is succeeded
-  retries: 10
-  delay: 2
-  tags:
-    - cmake
-
-- name: Install maven
-  win_chocolatey:
-    name: maven
-    state: "{{ win_package_state }}"
-    force: "{{ win_package_force }}"
-  register: download_maven
-  until: download_maven is succeeded
-  retries: 10
-  delay: 2
-  tags:
-    - maven
-
-- name: Install doxygen
-  win_chocolatey:
-    name: doxygen.install
-    state: "{{ win_package_state }}"
-    force: "{{ win_package_force }}"
-  register: download_doxygen
-  until: download_doxygen is succeeded
-  retries: 10
-  delay: 2
