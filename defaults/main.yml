@@ -4,6 +4,13 @@ win_package_state: present
 win_package_force: false
 win_local_dir: 'C:/Local'
 
+win_buildtools_choco:
+  - cmake
+  - doxygen.install
+  - git
+  - gitlab-runner
+  - maven
+
 # https://chocolatey.org/packages?q=visualstudio2019-workload
 msvc2019_choco_packages:
   # - visualstudio2019buildtools
@@ -42,11 +49,6 @@ msvc2015_choco_package:
 uninstall_choco_packages:
   - vim
   - sysinternals
-
-uninstall_windows2016_features:
-  - FileAndStorage-Services
-  - Storage-Services
-  - FS-SMB1
 
 install_windows2016_features:
   - Telnet-Client
