@@ -15,13 +15,15 @@
     name: "chocolatey"
   register: download_choco
   until: download_choco is succeeded
-  retries: 10
-  delay: 2
+  retries: 4
+  delay: 5
 
 #  https://github.com/ansible/ansible/issues/53971
-- name: Downgrade chocolatey
-  win_shell: |
-    choco.exe install -y --version 0.10.11 --allow-downgrade chocolatey
+- name: disable win_chocolatey_feature useEnhancedExitCodes
+  win_chocolatey_feature:
+    name: useEnhancedExitCodes
+    state: disabled
+  failed_when: false
 
 - name: Uninstall choco packages
   win_chocolatey:
