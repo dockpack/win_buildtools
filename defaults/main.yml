@@ -48,7 +48,6 @@ msvc2015_choco_package:
 
 uninstall_choco_packages:
   - vim
-  - sysinternals
 
 install_windows2016_features:
   - Telnet-Client
