@@ -39,7 +39,7 @@
 
 - name: Install visualstudio2015community
   when: toolset == 'msvc-14.0'
-  async: 7200
+  async: 28800
   poll: 30
   win_chocolatey:
     name: "{{ msvc2015_choco_package }}"
@@ -72,7 +72,7 @@
     choco_packages: "{{ msvc2019_choco_packages }}"
 
 - name: Install win_buildtools_choco packages
-  async: 4000
+  async: 7200
   poll: 60
   win_chocolatey:
     name: "{{ item }}"
