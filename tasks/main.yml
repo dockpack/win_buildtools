@@ -71,6 +71,15 @@
   set_fact:
     choco_packages: "{{ msvc2019_choco_packages }}"
 
+- name: Install VS2017 or VS2019
+  when: toolset != 'msvc-14.0'
+  async: 28800
+  poll: 30
+  win_chocolatey:
+    name: "{{ choco_packages }}"
+    force: true
+    timeout: 7200
+
 - name: Install win_buildtools_choco packages
   async: 7200
   poll: 60
