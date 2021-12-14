@@ -44,7 +44,7 @@
   win_chocolatey:
     name: "{{ msvc2015_choco_package }}"
     force: true
-    package_params: '--AdminFile {{ win_local_dir }}/AdminDeployment.xml'
+    package_params: '--AdminFile {{ win_local_dir }}/AdminDeployment.xml {{ msvc_package_params }}'
     timeout: 7200
 
 - name: Install .NET Framework Core
@@ -77,6 +77,7 @@
   poll: 30
   win_chocolatey:
     name: "{{ choco_packages }}"
+    package_params: "{{ msvc_package_params }}"
     force: true
     timeout: 7200
 

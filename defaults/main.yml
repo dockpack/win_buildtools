@@ -46,6 +46,8 @@ msvc2015_choco_package:
   - visualstudio2015community
   # - microsoft-visual-cpp-build-tools
 
+msvc_package_params: ""
+
 uninstall_choco_packages:
   - vim
 
