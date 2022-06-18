@@ -11,6 +11,19 @@ win_buildtools_choco:
   - gitlab-runner
   - maven
 
+# https://chocolatey.org/packages?q=visualstudio2022-workload
+msvc2022_choco_packages:
+  # - visualstudio2022buildtools
+  - visualstudio2022community
+  - visualstudio2022-workload-vctools
+  # - visualstudio2022-workload-nativecrossplat
+  # - visualstudio2022-workload-python
+  # - visualstudio2022-workload-datascience
+  # - visualstudio2022-workload-azure
+  # - visualstudio2022-workload-azurebuildtools
+  # - visualstudio2022-workload-data
+  # - visualstudio2022-workload-databuildtools
+
 # https://chocolatey.org/packages?q=visualstudio2019-workload
 msvc2019_choco_packages:
   # - visualstudio2019buildtools
