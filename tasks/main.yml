@@ -71,7 +71,12 @@
   set_fact:
     choco_packages: "{{ msvc2019_choco_packages }}"
 
-- name: Install VS2017 or VS2019
+- name: Determine choco_packages for VS2022
+  when: toolset == 'msvc-14.3'
+  set_fact:
+    choco_packages: "{{ msvc2022_choco_packages }}"
+
+- name: Install VS2017, VS2019 or VS2022
   when: toolset != 'msvc-14.0'
   async: 28800
   poll: 30
