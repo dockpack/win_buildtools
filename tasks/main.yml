@@ -81,10 +81,11 @@
   async: 28800
   poll: 30
   win_chocolatey:
-    name: "{{ choco_packages }}"
+    name: "{{ item }}"
     package_params: "{{ msvc_package_params }}"
     force: true
     timeout: 7200
+  with_items: "{{ choco_packages }}"
 
 - name: Install win_buildtools_choco packages
   async: 7200
