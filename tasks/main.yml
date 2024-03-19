@@ -19,6 +19,12 @@
   delay: 5
 
 #  https://github.com/ansible/ansible/issues/53971
+- name: Downgrade chocolatey
+  when: not vscode.stat.exists|bool
+  win_shell: |
+    choco.exe install -y --version 0.10.11 --allow-downgrade chocolatey
+
+#  https://github.com/ansible/ansible/issues/53971
 - name: disable win_chocolatey_feature useEnhancedExitCodes
   win_chocolatey_feature:
     name: useEnhancedExitCodes
